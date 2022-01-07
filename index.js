@@ -13,6 +13,10 @@ app.use(cors())
 mongoose.connect(process.env.DB_CONNECTION)
 
 
+app.get('/',(req,res)=>{
+    res.send("Server is Running")
+})
+
 // Getting Bloodbank based of Pincode
 app.get('/blood-banks/:pin', async (req, res)=>{
     const bb = await BBModel.find({"Pincode":{$eq:`${req.params.pin}`}},{})
@@ -27,4 +31,6 @@ app.post('/createbb', async (req,res)=>{
 })
 
 //Port
-app.listen(4000)
+app.listen(4000,(req,res)=>{
+   console.log('Server is Running')
+})
