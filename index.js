@@ -1,34 +1,21 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
-const BBModel = require('./models/BloodBankModel')
+const apiroutes = require('./routes/api');
+const donorroutes = require('./routes/donor');
+
+
 const cors = require('cors');
 require('dotenv/config')
 
 
-app.use(express.json())
-app.use(cors())
-
+app.use(express.json());
+app.use(cors());
+app.use('/v1', apiroutes);
+app.use('/v1', donorroutes);
 
 mongoose.connect(process.env.DB_CONNECTION)
 
-
-app.get('/',(req,res)=>{
-    res.send("Server is Running")
-})
-
-// Getting Bloodbank based of Pincode
-app.get('/blood-banks/:pin', async (req, res)=>{
-    const bb = await BBModel.find({"Pincode":{$eq:`${req.params.pin}`}},{})
-    res.send(bb)
-})
-
-// Creating New Blood Bank
-app.post('/createbb', async (req,res)=>{
-    const newbloodbank = new BBModel(req.body);
-    await newbloodbank.save();
-    res.json(newbloodbank)
-})
 
 //Port
 app.listen(4000,(req,res)=>{
