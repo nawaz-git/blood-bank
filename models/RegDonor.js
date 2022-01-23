@@ -10,7 +10,7 @@ const DonorRegister = mongoose.Schema({
     'Disease': { type: String },
     'last donated': { type: Number},
     'City': { type: String },
-    'Pincode': { type: Number }
+    'Pin': { type: Number }
 } );
 
 const DonorDetails = mongoose.model('DonorRegister', DonorRegister);
