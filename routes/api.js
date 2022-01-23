@@ -16,7 +16,8 @@ routes.get('/blood-bank', async (req, res) => {
        res.status(400).json({success: false, message:err.message});
     }
  })
-
+ 
+ 
 // Getting Bloodbank based of Pincode
 routes.get('/blood-banks/:pin', async (req, res) => {
     const bb = await BBModel.find({ "Pincode": { $eq: `${req.params.pin}` } }, {})
