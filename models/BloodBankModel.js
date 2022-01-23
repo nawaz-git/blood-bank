@@ -13,11 +13,10 @@ const BloodBank = mongoose.Schema({
     "Helpline": { type: Number },
     "Fax": { type: String },
     "Email": { type: String },
-   //"Stock" : [StockSchema],
     "Website": { type: String },
     "Nodal_Officer": { type: String },
     "Contact_Nodal_Officer": { type: String },
-    "Mobile_Nodal_Officer": {type: String },
+    "Mobile_Nodal_Officer": {type:  Number },
     "Email_Nodal_Officer": { type: String },
     "Qualification_Nodal_Officer": { type: String },
     "Category": { type: String },
@@ -32,7 +31,7 @@ const BloodBank = mongoose.Schema({
   },{strict: false})
 
   BloodBank.virtual('bloodStocks', {
-    'ref' : 'DonorRegister',
+    'ref' : 'stockSchema',
     'localField' : '_id',
     'foreignField' : 'Blood-bank'
   });

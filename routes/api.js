@@ -7,6 +7,16 @@ routes.get('/',(req,res) => {
     res.send("Server is Running")
 })
 
+routes.get('/blood-bank', async (req, res) => {
+    try {
+       const data = await BBModel.find()
+                                  .populate({path: 'bloodStocks', select: ['bloodGroup','Quantity',' price',' source']});
+       res.status(200).json({success: true, data});
+    } catch (err) {
+       res.status(400).json({success: false, message:err.message});
+    }
+ })
+
 // Getting Bloodbank based of Pincode
 routes.get('/blood-banks/:pin', async (req, res) => {
     const bb = await BBModel.find({ "Pincode": { $eq: `${req.params.pin}` } }, {})
@@ -22,7 +32,8 @@ routes.post('/createbb', async (req, res) => {
 
 //updating existing bloodbank
 routes.put('/updatebb/:_id', async (req, res) => {
-    const doc = await BBModel.findByIdAndUpdate(req.params._id, { "Email": "lab@gmail.com" });
+    const doc = await BBModel.findByIdAndUpdate(req.params._id, { "Email": "lab@gmail.com" })
+     .populate({path: 'bloodStocks', select: ['bloodGroup','Quantity',' price',' source']});
     doc.save();
     res.json(doc);
 })
