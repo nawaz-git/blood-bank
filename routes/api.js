@@ -7,6 +7,7 @@ routes.get('/',(req,res) => {
     res.send("Server is Running")
 })
 
+
 routes.get('/blood-bank', async (req, res) => {
     try {
        const data = await BBModel.find()
