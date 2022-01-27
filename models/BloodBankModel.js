@@ -10,6 +10,7 @@ const BloodBank = mongoose.Schema({
     "Pincode": { type: Number },
     "Contact_No": { type: String },
     "Mobile": {type: String },
+    "password": {type: String},
     "Helpline": { type: Number },
     "Fax": { type: String },
     "Email": { type: String },
