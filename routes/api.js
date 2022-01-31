@@ -72,6 +72,12 @@ routes.post('/createbb', (req, res) => {
         }
     })
 
+    routes.get('/bb/:_id', async(req, res) => {
+        const bbid = await BBModel.findById(req.params._id)
+        .populate({ path: 'bloodStocks', select: ['bloodGroup', 'Quantity', ' price', ' source'] });
+         res.send(bbid)
+    })
+ 
     routes.post('/bblogin', (req, res) => {
         BBModel.find({ Mobile: req.body.Mobile })
             .exec()

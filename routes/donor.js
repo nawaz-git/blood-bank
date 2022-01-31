@@ -13,7 +13,7 @@ routes.get('/register', async (req, res) => {
 })
 
 //storing signup of donor form in database
-routes.post('/register',  (req, res) => {
+routes.post('/ddregister',  (req, res) => {
        bcrypt.hash(req.body.password,10,(err, hash) => {
            if(err)
            {
@@ -43,7 +43,7 @@ routes.post('/register',  (req, res) => {
        })
      //  const newDonor = new DDModel(req.body);
          
-routes.post('/login', (req, res) => {
+routes.post('/ddlogin', (req, res) => {
     DDModel.find({phone:req.body.phone})
     .exec()
     .then(user => {
