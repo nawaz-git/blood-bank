@@ -28,6 +28,52 @@ routes.get('/blood-bank/:pin', async (req, res) => {
     res.send(bb)
 })
 
+//login api for bood-bank
+routes.post('/bblogin', async (req, res) => {
+    await BBModel.find({ Mobile: req.body.Mobile })
+          .exec()
+          .then(user => {
+              if (user.length < 1) {
+                  return res.status(401).json({
+                      msg: 'user doesnt exist'
+                  })
+              }
+          bcrypt.compare(req.body.Password, user[0].Password, (err, result) => {
+                  if (!result) {
+                      return res.status(400).json({
+                          msg: 'password not matched'
+                      })
+                  }
+                  if (result) {
+                      const token = jwt.sign({
+                          Mobile: user[0].Mobile ,
+                          Blood_Bank_Name:user[0].Blood_Bank_Name ,
+                          Email: user[0].Email,
+                          Pincode: user[0].Pincode
+                      },
+                          'token key',
+                          { expiresIn: "24h" }
+                      );
+                      res.status(200).json({
+                          Mobile: user[0].Mobile ,
+                          Blood_Bank_Name:user[0].Blood_Bank_Name ,
+                          Email: user[0].Email,
+                          Pincode: user[0].Pincode,
+                          id:user[0]._id,
+                          token: token
+                      })
+                  }
+              })
+          })
+          .catch(error => {
+
+              res.status(402).json({
+                  error: err
+              })
+          })
+      })
+  
+
 // Creating New Blood Bank
 routes.post('/createbb', (req, res) => {
     bcrypt.hash(req.body.Password, 10, (err, hash) => {
@@ -71,6 +117,7 @@ routes.post('/createbb', (req, res) => {
             res.json(newbloodbank);
         }
     })
+})
 
     routes.get('/bb/:_id', async(req, res) => {
         const bbid = await BBModel.findById(req.params._id)
@@ -78,49 +125,13 @@ routes.post('/createbb', (req, res) => {
          res.send(bbid)
     })
  
-    routes.post('/bblogin', (req, res) => {
-        BBModel.find({ Mobile: req.body.Mobile })
-            .exec()
-            .then(user => {
-                if (user.length < 1) {
-                    return res.status(401).json({
-                        msg: 'user doesnt exist'
-                    })
-                }
-                bcrypt.compare(req.body.Password, user[0].Password, (err, result) => {
-                    if (!result) {
-                        return res.status(400).json({
-                            msg: 'password not matched'
-                        })
-                    }
-                    if (result) {
-                        const token = jwt.sign({
-                            Mobile: user[0].Mobile ,
-                            Blood_Bank_Name:user[0].Blood_Bank_Name ,
-                            Email: user[0].Email,
-                            Pincode: user[0].Pincode
-                        },
-                            'token key',
-                            { expiresIn: "24h" }
-                        );
-                        res.status(200).json({
-                            Mobile: user[0].Mobile ,
-                            Blood_Bank_Name:user[0].Blood_Bank_Name ,
-                            Email: user[0].Email,
-                            Pincode: user[0].Pincode,
-                            token: token
-                        })
-                    }
-                })
-            })
-            .catch(error => {
+ 
 
-                res.status(402).json({
-                    error: err
-                })
-            })
-        })
-    })
+    //getting all blood-bank ids
+   /* routes.get('/Allid', async (req, res) => {
+        const allid = await BBModel.find({}).select(['_id','Blood_Bank_Name'])
+        res.status(200).json(allid)
+    })*/
 
     //updating existing bloodbank
     routes.put('/updatebb/:_id', async (req, res) => {

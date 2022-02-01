@@ -12,37 +12,8 @@ routes.get('/register', async (req, res) => {
     res.send(dd)
 })
 
-//storing signup of donor form in database
-routes.post('/ddregister',  (req, res) => {
-       bcrypt.hash(req.body.password,10,(err, hash) => {
-           if(err)
-           {
-               return res.status(500).json({
-                   error: err
-               })
-           }
-           else{
-               const user = new DDModel({
-                   _id: new mongoose.Types.ObjectId,
-                   FirstName: req.body.FirstName ,
-                   LastName: req.body.LastName  ,
-                   Gender: req.body.Gender ,
-                   phone: req.body.phone ,
-                   password : hash ,
-                   BloodGroup: req.body.BloodGroup,
-                   Disease: req.body.Disease ,
-                   lastDonated: req.body.lastDonated,
-                   City: req.body.City,
-                   Pincode: req.body.Pincode 
-               })
-               user.save();
-               res.json(user);
-   
-           }
-        })
-       })
-     //  const newDonor = new DDModel(req.body);
-         
+
+//login api fordonor
 routes.post('/ddlogin', (req, res) => {
     DDModel.find({phone:req.body.phone})
     .exec()
@@ -87,6 +58,39 @@ routes.post('/ddlogin', (req, res) => {
         })
     })
 })
+
+//storing signup of donor form in database
+routes.post('/ddregister',  (req, res) => {
+       bcrypt.hash(req.body.password,10,(err, hash) => {
+           if(err)
+           {
+               return res.status(500).json({
+                   error: err
+               })
+           }
+           else{
+               const user = new DDModel({
+                   _id: new mongoose.Types.ObjectId,
+                   FirstName: req.body.FirstName ,
+                   LastName: req.body.LastName  ,
+                   Gender: req.body.Gender ,
+                   phone: req.body.phone ,
+                   password : hash ,
+                   BloodGroup: req.body.BloodGroup,
+                   Disease: req.body.Disease ,
+                   lastDonated: req.body.lastDonated,
+                   City: req.body.City,
+                   Pincode: req.body.Pincode 
+               })
+               user.save();
+               res.json(user);
+   
+           }
+        })
+       })
+          //  const newDonor = new DDModel(req.body);
+         
+
  
 
 //updating donor details in database
