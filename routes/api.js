@@ -27,12 +27,6 @@ routes.get('/blood-bank/:pin', async (req, res) => {
         .populate({ path: 'bloodStocks', select: ['bloodGroup', 'Quantity', ' price', ' source'] });
     res.send(bb)
 })
-
-
-  
-
-
-
     routes.get('/bb/:_id', async(req, res) => {
         const bbid = await BBModel.findById(req.params._id)
         .populate({ path: 'bloodStocks', select: ['bloodGroup', 'Quantity', ' price', ' source'] });

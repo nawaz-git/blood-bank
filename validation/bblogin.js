@@ -5,7 +5,17 @@ const BBModel = require('../models/BloodBankModel');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-routes.post('/createbb', (req, res) => {
+routes.post('/createbb', async (req, res) => {
+    const val = await BBModel.findOne({Mobile: req.body.Mobile})
+    {
+     if (val)
+     {
+        return res.status(401).json({
+            msg :"number already exists"
+        })
+     }
+    }
+    
     bcrypt.hash(req.body.Password, 10, (err, hash) => {
         if (err) {
             return res.status(500).json({
@@ -43,6 +53,7 @@ routes.post('/createbb', (req, res) => {
                 Latitude: req.body.Latitude,
                 Longitude: req.body.Longitude
             });
+         
             newbloodbank.save();
             res.json(newbloodbank);
         }
