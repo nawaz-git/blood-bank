@@ -52,7 +52,16 @@ routes.post('/ddlogin', (req, res) => {
 })
 
 //storing signup of donor form in database
-routes.post('/ddregister',  (req, res) => {
+routes.post('/ddregister', async (req, res) => {
+    const val = await BBModel.findOne({phone: req.body.phone})
+    {
+     if (val)
+     {
+        return res.status(401).json({
+            msg :"number already exists"
+        })
+     }
+    }
        bcrypt.hash(req.body.password,10,(err, hash) => {
            if(err)
            {
