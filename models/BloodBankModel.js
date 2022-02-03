@@ -9,18 +9,15 @@ const BloodBank = mongoose.Schema({
     "Address": { type: String },
     "Pincode": { type: Number },
     "Contact_No": { type: String },
-    "Mobile": {
-      "$numberLong": { type: String }
-    },
+    "Mobile": {type: String },
+    "password": {type: String},
     "Helpline": { type: Number },
     "Fax": { type: String },
     "Email": { type: String },
     "Website": { type: String },
     "Nodal_Officer": { type: String },
     "Contact_Nodal_Officer": { type: String },
-    "Mobile_Nodal_Officer": {
-      "$numberLong": { type: String }
-    },
+    "Mobile_Nodal_Officer": {type:  Number },
     "Email_Nodal_Officer": { type: String },
     "Qualification_Nodal_Officer": { type: String },
     "Category": { type: String },
@@ -33,6 +30,15 @@ const BloodBank = mongoose.Schema({
     "Latitude": { type: Number },
     "Longitude": { type: Number }
   },{strict: false})
+
+  BloodBank.virtual('bloodStocks', {
+    'ref' : 'stockSchema',
+    'localField' : '_id',
+    'foreignField' : 'Blood-bank'
+  });
+
+  BloodBank.set('toObject', {virtuals: true});
+  BloodBank.set('toJSON', {virtuals: true});
 
 const bloodBankModel = mongoose.model("Blood-bank",BloodBank)
 module.exports = bloodBankModel;
