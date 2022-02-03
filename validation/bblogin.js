@@ -15,7 +15,12 @@ routes.post('/createbb', async (req, res) => {
         })
      }
     }
-    
+    if(!req.body.State || !req.body.Blood_Bank_Name || !req.body.Category || !req.body.Address || !req.body.State || !req.body.City || !req.body.Email || !req.body.Contact_No || !req.body.Mobile || !req.body.Pincode || !req.body.Website || !req.body.Password )
+    {
+        res.json({
+            msg:"please enter data"
+        })
+    }
     bcrypt.hash(req.body.Password, 10, (err, hash) => {
         if (err) {
             return res.status(500).json({
@@ -53,7 +58,7 @@ routes.post('/createbb', async (req, res) => {
                 Latitude: req.body.Latitude,
                 Longitude: req.body.Longitude
             });
-         
+          
             newbloodbank.save();
             res.json(newbloodbank);
         }
