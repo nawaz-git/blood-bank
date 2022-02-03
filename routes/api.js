@@ -43,10 +43,30 @@ routes.get('/blood-bank/:pin', async (req, res) => {
 
     //updating existing bloodbank
     routes.put('/updatebb/:_id', async (req, res) => {
-        const doc = await BBModel.findByIdAndUpdate(req.params._id, { "Email": "lab@gmail.com" })
-            .populate({ path: 'bloodStocks', select: ['bloodGroup', 'Quantity', ' price', ' source'] });
-        doc.save();
-        res.json(doc);
+        bcrypt.hash(req.body.Password, 10, async (err, hash) => {
+            if (err) {
+                return res.status(500).json({
+                    error: err
+                })
+            }
+            else{
+                const doc = await BBModel.findByIdAndUpdate(req.params._id, {
+                     "Blood_Bank_Name": req.body.Blood_Bank_Name,
+                     "Category": req.body.Category,
+                     "Address":req.body.Address,
+                     "City":req.body.City,
+                     "Contact_No": req.body.Contact_No,
+                     "Email":req.body.Email,
+                     "Mobile":req.body.Mobile,
+                     "Pincode":req.body.Pincode,
+                     "State":req.body.State,
+                     "Website":req.body.Website,
+                     "Password": hash })
+                .populate({ path: 'bloodStocks', select: ['bloodGroup', 'Quantity', ' price', ' source'] });
+            doc.save();
+            res.json(doc);
+            }
+        })
     })
 
     //deleting bloodbank
