@@ -9,7 +9,7 @@ const DonorRegister = mongoose.Schema({
     'password' : {type : String},
     'BloodGroup': { type: String },
     'Disease': { type: String },
-    'lastDonated': { type: Number},
+    'lastDonated': { type: String},
     'City': { type: String },
     'Pincode': { type: Number }
 } );

@@ -53,7 +53,7 @@ routes.post('/ddlogin', (req, res) => {
 
 //storing signup of donor form in database
 routes.post('/ddregister', async (req, res) => {
-    const val = await BBModel.findOne({phone: req.body.phone})
+    const val = await DDModel.findOne({phone: req.body.phone})
     {
      if (val)
      {
@@ -61,6 +61,12 @@ routes.post('/ddregister', async (req, res) => {
             msg :"number already exists"
         })
      }
+    }
+    if(!req.body.LastName|| !req.body.FirstName || !req.body.Gender || !req.body.phone || !req.body.BloodGroup || !req.body.Disease || !req.body.lastDonated|| !req.body.City || !req.body.Pincode || !req.body.password )
+    {
+        res.json({
+            msg:"please enter data"
+        })
     }
        bcrypt.hash(req.body.password,10,(err, hash) => {
            if(err)
