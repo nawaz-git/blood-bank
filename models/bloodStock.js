@@ -11,7 +11,7 @@ const StockSchema = mongoose.Schema({
         'required': true
     }
 },
-    //  });
+   
     { timestamps: true }
 );
 

@@ -1,28 +1,14 @@
 const express = require('express');
 const routes = require('express').Router();
 const path = require('path');
-const DDModel = require('../models/RegDonor');
-const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
-const jwt = require('jsonwebtoken');
+const donorController = require('../controllers/donor'); 
 
-//getting stored details of donors
-routes.get('/register', async (req, res) => {
-    const dd = await DDModel.find()
-    res.send(dd)
-})
 
-//updating donor details in database
-routes.put('/register/:_id', async (req, res) => {
-    const ddupdate = await DDModel.findByIdAndUpdate(req.params._id, { "Disease": "yes" });
-    ddupdate.save();
-    res.json(ddupdate);
-})
+routes.get('/register',donorController.getAllDonor);
 
-//deleting donor account
-routes.delete('/deletedd/:_id', async (req, res) => {
-    const deldd = await DDModel.findByIdAndDelete(req.params._id);
-    res.json(deldd);
-})
+routes.put('/register/:_id',donorController.putDonorById);
+
+routes.delete('/deletedd/:_id',donorController.deleteDonor);
 
 module.exports = routes;
