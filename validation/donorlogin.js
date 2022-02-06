@@ -62,7 +62,7 @@ routes.post('/ddregister', async (req, res) => {
         })
      }
     }
-    if(!req.body.LastName|| !req.body.FirstName || !req.body.Gender || !req.body.phone || !req.body.BloodGroup || !req.body.Disease || !req.body.lastDonated|| !req.body.City || !req.body.Pincode || !req.body.password )
+    if(!req.body.Gender || !req.body.phone || !req.body.BloodGroup|| !req.body.password )
     {
         res.json({
             msg:"please enter data"
