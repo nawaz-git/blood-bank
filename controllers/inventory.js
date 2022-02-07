@@ -16,13 +16,24 @@ exports.filterBGroup = async (req, res) => {
 }
 
 exports.postBStocks =  async (req, res) => {
+   const BG = [ 'A+' , 'B+' , 'A-','B-','AB+','AB-','O+', 'O-'];
+   if(!BG.includes(req.body.bloodGroup))
+   {
+       res.status(401).json({
+           msg:"please enter valid bloodgroup"
+       })
+   }
+   else
+   {
     const newStock = new BSModel(req.body);
     await newStock.save();
     res.json(newStock);
+   }
+  
 }
 
 exports.putBStocks = async (req, res) => {
-    const BSupdate = await BSModel.findByIdAndUpdate(req.params._id, {"bloodGroup" : "a"});
+    const BSupdate = await BSModel.findByIdAndUpdate(req.params._id, {});
     BSupdate.save();
     res.json(BSupdate);
 }

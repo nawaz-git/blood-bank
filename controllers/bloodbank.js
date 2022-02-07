@@ -22,7 +22,7 @@ exports.getbypincode =  async (req, res) => {
 
 exports.getbyid =  async(req, res) => {
     const bbid = await BBModel.findById(req.params._id)
-    .populate({ path: 'bloodStocks', select: ['bloodGroup', 'Quantity', ' price', ' source'] });
+    .populate({ path: 'bloodStocks', select: ['bloodGroup', 'Quantity', 'price', 'source'] });
      res.send(bbid)
 }
 
