@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 exports.getbloodbank =  async (req, res) => {
     try {
         const data = await BBModel.find()
-            .populate({ path: 'bloodStocks', select: ['bloodGroup', 'Quantity', ' price', ' source'] });
+            .populate({ path: 'bloodStocks', select: ['bloodGroup', 'Quantity', 'price', 'source'] });
         res.status(200).json({ success: true, data });
     } catch (err) {
         res.status(400).json({ success: false, message: err.message });
@@ -16,7 +16,7 @@ exports.getbloodbank =  async (req, res) => {
 
 exports.getbypincode =  async (req, res) => {
     const bb = await BBModel.find({ "Pincode": { $eq: `${req.params.pin}` } }, {})
-        .populate({ path: 'bloodStocks', select: ['bloodGroup', 'Quantity', ' price', ' source'] });
+        .populate({ path: 'bloodStocks', select: ['bloodGroup', 'Quantity', 'price', 'source'] });
     res.send(bb)
 }
 
@@ -46,7 +46,7 @@ exports.putbloodbank =  async (req, res) => {
                  "State":req.body.State,
                  "Website":req.body.Website,
                  "Password": hash })
-            .populate({ path: 'bloodStocks', select: ['bloodGroup', 'Quantity', ' price', ' source'] });
+            .populate({ path: 'bloodStocks', select: ['bloodGroup', 'Quantity', 'price', 'source'] });
         doc.save();
         res.json(doc);
         }

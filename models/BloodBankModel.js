@@ -34,7 +34,7 @@ const BloodBank = mongoose.Schema({
   BloodBank.virtual('bloodStocks', {
     'ref' : 'stockSchema',
     'localField' : '_id',
-    'foreignField' : 'Blood-bank'
+    'foreignField' : 'Bloodbank'
   });
 
   BloodBank.set('toObject', {virtuals: true});
