@@ -1,4 +1,7 @@
 const BSModel = require('../models/bloodStock');
+const BBModel = require('../models/BloodBankModel');
+const { json } = require('body-parser');
+const Circular = require('circular-json');
 
 exports.getBloodStocks = async (req, res) => {
     const dd = await BSModel.find()
@@ -9,6 +12,7 @@ exports.filterBGroup = async (req, res) => {
     try {
     const bf = await BSModel.find({"bloodGroup" : { $eq: `${req.params.bloodgroup}`}}, {})
     res.send(bf)
+    console.log(bf)
     }
     catch{
        console.error();
@@ -23,13 +27,9 @@ exports.postBStocks =  async (req, res) => {
            msg:"please enter valid bloodgroup"
        })
    }
-   else
-   {
     const newStock = new BSModel(req.body);
-    await newStock.save();
-    res.json(newStock);
-   }
-  
+     await newStock.save();
+   res.json(newStock);
 }
 
 exports.putBStocks = async (req, res) => {
