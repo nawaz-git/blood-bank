@@ -2,6 +2,7 @@ const BSModel = require('../models/bloodStock');
 const BBModel = require('../models/BloodBankModel');
 const { json } = require('body-parser');
 const Circular = require('circular-json');
+const { ConnectionCheckedInEvent } = require('mongodb');
 
 exports.getBloodStocks = async (req, res) => {
     const dd = await BSModel.find()
@@ -27,13 +28,19 @@ exports.postBStocks =  async (req, res) => {
            msg:"please enter valid bloodgroup"
        })
    }
-    const newStock = new BSModel(req.body);
-     await newStock.save();
-   res.json(newStock);
+   const newStock = new BSModel(req.body);
+    await newStock.save();
+    res.json(newStock);
 }
 
 exports.putBStocks = async (req, res) => {
-    const BSupdate = await BSModel.findByIdAndUpdate(req.params._id, {});
+    const BSupdate = await BSModel.findByIdAndUpdate(req.params._id, {
+        "bloodGroup": req.body.bloodGroup,
+        "Quantity": req.body.Quantity,
+        "price": req.body.price,
+        "source": req.body.source,
+        "Bloodbank": req.body.Bloodbank
+    });
     BSupdate.save();
     res.json(BSupdate);
 }
