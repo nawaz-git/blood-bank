@@ -48,6 +48,6 @@ const BloodBank = mongoose.Schema({
   BloodBank.set('toObject', {virtuals: true});
   BloodBank.set('toJSON', {virtuals: true});
 
-const bloodBankModel = mongoose.model("BloodBank",BloodBank)
+const bloodBankModel = mongoose.model("Blood-Bank",BloodBank)
 module.exports = bloodBankModel;
 

@@ -9,7 +9,7 @@ const DonorForm = mongoose.Schema({
     'Pincode': { type: Number },
     'Bloodbank': {
       'type': mongoose.Schema.Types.ObjectId,
-      'ref': 'BloodBank',
+      'ref': 'Blood-Bank',
       'required': true
   }
 }, { timestamps: true } );
