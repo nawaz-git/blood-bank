@@ -7,7 +7,7 @@ const StockSchema = mongoose.Schema({
     'source': { type: String },
     'Bloodbank': {
         'type': mongoose.Schema.Types.ObjectId,
-        'ref': 'Blood-bank',
+        'ref': 'Bloodbank',
         'required': true
     }
 },

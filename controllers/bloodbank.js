@@ -1,7 +1,7 @@
 const BBModel = require('../models/BloodBankModel');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
+const DDModel = require('../models/donorform')
 
 
 exports.getbloodbank =  async (req, res) => {
@@ -54,7 +54,25 @@ exports.putbloodbank =  async (req, res) => {
 }
 
 exports.postdonorform = async (req, res) => {
-    
+    if(!req.body.Gender || !req.body.phone || !req.body.BloodGroup )
+    {
+        res.json({
+            msg:"please enter data"
+        })
+    }
+   const BG = [ 'A+' , 'B+' , 'A-','B-','AB+','AB-','O+', 'O-'];
+   if(!BG.includes(req.body.BloodGroup))
+   {
+       res.status(401).json({
+           msg:"please enter valid bloodgroup"
+       })
+   }
+   else
+   {
+    const form = new DDModel(req.body);
+    await form.save();
+    res.json(form);
+   }
 }
 
 exports.deletebb =  async (req, res) => {
