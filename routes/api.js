@@ -14,8 +14,6 @@ routes.get('/blood-bank/:pin', bbcontroller.getbypincode);
 
 routes.get('/bb/:_id', bbcontroller.getbyid);
 
-routes.get('/donorform', bbcontroller.postdonorform);
-
 routes.put('/updatebb/:_id', bbcontroller.putbloodbank);
 
 routes.delete('/deletebb/:_id', bbcontroller.deletebb);
