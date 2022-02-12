@@ -53,6 +53,10 @@ exports.putbloodbank =  async (req, res) => {
     })
 }
 
+exports.postdonorform = async (req, res) => {
+    
+}
+
 exports.deletebb =  async (req, res) => {
     const doc = await BBModel.findByIdAndDelete(req.params._id);
     res.json(doc);

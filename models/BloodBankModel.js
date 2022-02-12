@@ -31,6 +31,26 @@ const BloodBank = mongoose.Schema({
     "Longitude": { type: Number }
   },{strict: false})
 
+const DonorForm = mongoose.Schema({
+    'FullName': { type: String },
+    'Gender': { type: String },
+    'phone' : {type : String},
+    'BloodGroup': { type: String },
+    'City': { type: String },
+    'Pincode': { type: Number },
+    'Bloodbank': {
+      'type': mongoose.Schema.Types.ObjectId,
+      'ref': 'BloodBank',
+      'required': true
+  }
+} );
+
+  BloodBank.virtual('DonorDetails', {
+    'ref' : 'DonorForm',
+    'localField' : '_id',
+    'foreignField' : 'Bloodbank'
+  });
+
   BloodBank.virtual('bloodStocks', {
     'ref' : 'stockSchema',
     'localField' : '_id',
@@ -40,5 +60,8 @@ const BloodBank = mongoose.Schema({
   BloodBank.set('toObject', {virtuals: true});
   BloodBank.set('toJSON', {virtuals: true});
 
-const bloodBankModel = mongoose.model("Blood-bank",BloodBank)
+const bloodBankModel = mongoose.model("BloodBank",BloodBank)
 module.exports = bloodBankModel;
+
+const DonorDetails = mongoose.model('DonorForm', DonorForm);
+module.exports = DonorDetails;
