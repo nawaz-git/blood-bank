@@ -15,7 +15,7 @@ routes.post('/createbb', async (req, res) => {
         })
      }
     }
-    if(!req.body.State || !req.body.Blood_Bank_Name || !req.body.Category || !req.body.Address || !req.body.State || !req.body.City || !req.body.Email || !req.body.Contact_No || !req.body.Mobile || !req.body.Pincode || !req.body.Website || !req.body.Password )
+    if(!req.body.Blood_Bank_Name || !req.body.Mobile || !req.body.Password )
     {
         res.json({
             msg:"please enter data"
@@ -65,7 +65,7 @@ routes.post('/createbb', async (req, res) => {
         }
     })
 })
-//login api for bood-bank
+//login api for blood-bank
 routes.post('/bblogin', async (req, res) => {
     await BBModel.find({ Mobile: req.body.Mobile })
           .exec()
@@ -103,8 +103,7 @@ routes.post('/bblogin', async (req, res) => {
               })
           })
           .catch(error => {
-
-              res.status(402).json({
+                  res.status(402).json({
                   error: err
               })
           })
