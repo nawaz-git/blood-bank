@@ -6,6 +6,7 @@ exports.getdonors =  async(req, res) => {
     res.status(200).json(donors);
 }
 
+
 exports.postdonorform = async (req, res) => {
     if(!req.body.Gender || !req.body.phone || !req.body.BloodGroup )
     {
@@ -22,8 +23,21 @@ exports.postdonorform = async (req, res) => {
    }
    else
    {
-    const form = new DDModel(req.body);
+    const form = new DDModel({
+        FullName:req.body.FullName ,
+        Gender: req.body.Gender,
+        phone:req.body.phone,
+        BloodGroup:req.body.BloodGroup,
+        City:req.body.City ,
+        Pincode: req.body.Pincode,
+        Bloodbank: req.body.Bloodbank
+    });
     await form.save();
     res.json(form);
    }
+}
+
+exports.deletedonor =  async (req, res) => {
+    const del = await DDModel.findByIdAndDelete(req.params._id);
+    res.json(del);
 }
