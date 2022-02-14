@@ -30,35 +30,53 @@ exports.getbyid =  async(req, res) => {
 }
 
 exports.putbloodbank =  async (req, res) => {
-    if (req.body.Password === "")
+    if (!req.body.Password === "")
     {
-        req.body.Password = doc[0].Password;
+        bcrypt.hash(req.body.Password, 10, async (err, hash) => {
+            if (err) {
+                return res.status(500).json({
+                    error: err
+                })
+            }
+            else
+            {
+                const doc = await BBModel.findByIdAndUpdate(req.params._id, {
+                    "Blood_Bank_Name": req.body.Blood_Bank_Name,
+                    "Category": req.body.Category,
+                    "Address":req.body.Address,
+                    "City":req.body.City,
+                    "Contact_No": req.body.Contact_No,
+                    "Email":req.body.Email,
+                    "Mobile":req.body.Mobile,
+                    "Pincode":req.body.Pincode,
+                    "State":req.body.State,
+                    "Website":req.body.Website,
+                    "Password": hash })
+                    .populate({ path: 'bloodStocks', select: ['bloodGroup', 'Quantity', 'price', 'source'] }).
+                    populate({ path: 'DonorDetails', select: ['FullName', 'Gender', 'phone', 'BloodGroup'] })
+           doc.save();
+           res.json(doc);
+                }
+     })
     }
-    bcrypt.hash(req.body.Password, 10, async (err, hash) => {
-        if (err) {
-            return res.status(500).json({
-                error: err
-            })
-        }
-
-            const doc = await BBModel.findByIdAndUpdate(req.params._id, {
-                 "Blood_Bank_Name": req.body.Blood_Bank_Name,
-                 "Category": req.body.Category,
-                 "Address":req.body.Address,
-                 "City":req.body.City,
-                 "Contact_No": req.body.Contact_No,
-                 "Email":req.body.Email,
-                 "Mobile":req.body.Mobile,
-                 "Pincode":req.body.Pincode,
-                 "State":req.body.State,
-                 "Website":req.body.Website,
-                 "Password": hash })
-                 .populate({ path: 'bloodStocks', select: ['bloodGroup', 'Quantity', 'price', 'source'] }).
-                 populate({ path: 'DonorDetails', select: ['FullName', 'Gender', 'phone', 'BloodGroup'] })
-        doc.save();
-        res.json(doc);
-        
-    })
+    else
+    {
+        const doc = await BBModel.findByIdAndUpdate(req.params._id, {
+            "Blood_Bank_Name": req.body.Blood_Bank_Name,
+            "Category": req.body.Category,
+            "Address":req.body.Address,
+            "City":req.body.City,
+            "Contact_No": req.body.Contact_No,
+            "Email":req.body.Email,
+            "Mobile":req.body.Mobile,
+            "Pincode":req.body.Pincode,
+            "State":req.body.State,
+            "Website":req.body.Website})
+            .populate({ path: 'bloodStocks', select: ['bloodGroup', 'Quantity', 'price', 'source'] }).
+            populate({ path: 'DonorDetails', select: ['FullName', 'Gender', 'phone', 'BloodGroup'] })
+   doc.save();
+   res.json(doc);
+    }
 }
 
 exports.deletebb =  async (req, res) => {
