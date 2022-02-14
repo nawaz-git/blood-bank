@@ -40,7 +40,7 @@ exports.putbloodbank =  async (req, res) => {
                 error: err
             })
         }
-        else{
+
             const doc = await BBModel.findByIdAndUpdate(req.params._id, {
                  "Blood_Bank_Name": req.body.Blood_Bank_Name,
                  "Category": req.body.Category,
@@ -57,7 +57,7 @@ exports.putbloodbank =  async (req, res) => {
                  populate({ path: 'DonorDetails', select: ['FullName', 'Gender', 'phone', 'BloodGroup'] })
         doc.save();
         res.json(doc);
-        }
+        
     })
 }
 
