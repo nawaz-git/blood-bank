@@ -30,6 +30,10 @@ exports.getbyid =  async(req, res) => {
 }
 
 exports.putbloodbank =  async (req, res) => {
+    if (req.body.Password === "")
+    {
+        req.body.Password = doc[0].Password;
+    }
     bcrypt.hash(req.body.Password, 10, async (err, hash) => {
         if (err) {
             return res.status(500).json({

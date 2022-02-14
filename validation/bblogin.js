@@ -75,10 +75,10 @@ routes.post('/bblogin', async (req, res) => {
                       msg: 'user doesnt exist'
                   })
               }
-          bcrypt.compare(req.body.Password, user[0].Password, (err, result) => {
+           bcrypt.compare(req.body.Password, user[0].Password, (err, result) => {
                   if (!result) {
                       return res.status(400).json({
-                          msg: 'password not matched'
+                          msg:"password error"
                       })
                   }
                   if (result) {
