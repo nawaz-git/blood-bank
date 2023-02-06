@@ -17,10 +17,12 @@ app.use('/v1', apiroutes);
 app.use('/v1', invroutes);
 app.use('/v1', donor);
 
-mongoose.connect(process.env.DB_CONNECTION)
- 
+mongoose.connect(process.env.DB_CONNECTION, () => {
+   console.log('Connected to DB');
+})
+
 
 //Port
-app.listen(4000,(req,res)=>{
+app.listen(4000, (req, res) => {
    console.log('Server is Running')
 })
